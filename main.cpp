@@ -10,9 +10,14 @@ char* command;
 
 int add_arguments(char* argument);
 int run_command(char* command);
+void log_info();
 
 int main(int argc, char* argv[]){
 	char* file_name = argv[0];
+	
+	if(argc == 1){
+		log_info();
+	}
 
 	for (int i=1; i<argc; ++i){
 		if (*(argv[i]) == '-') {
@@ -64,6 +69,14 @@ int run_command(char* command){
 	}
 	return 0;
 }
+
+void log_info(){
+	print("-- GNIT -- ");
+	print("It is a version conrolling system made in pure c ");
+	print("   this is doc on how to use this software ");
+	print("DOC DOC");
+}
+
 
 //Usage 
 //file_name -[flags] [commands]
