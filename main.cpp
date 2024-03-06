@@ -1,16 +1,21 @@
 #include <iostream>
 #include <cstring>
 #include <cassert>
-#define print(x) std::cout<<x<<std::endl
+
+#define print(x) std::cout<<x
+#define println(x) std::cout<<x<<std::endl
 
 char* arguments[2];
 int argument_size = 0;
 bool commanded = false;
 char* command;
+char* files[10];
+int file_size = 0;
 
 int add_arguments(char* argument);
 int run_command(char* command);
 void log_info();
+bool validate_file(char* file);
 
 int main(int argc, char* argv[]){
 	char* file_name = argv[0];
@@ -24,17 +29,39 @@ int main(int argc, char* argv[]){
 			if(add_arguments(argv[i]) != 0) return 1;
 		}		
 		else {
-			if(run_command(argv[i]) != 0) return 1;
+			if(!commanded){
+				if(run_command(argv[i]) != 0){
+					return 1;
+				}
+			}
+			else {
+				if (validate_file(argv[i])){
+					files[file_size] = argv[i];
+					++file_size;
+				}
+				else {
+					println("[WARNING] invalid files");
+					return 1;
+				}
+			}
 		}
 	}
 
 
-	for (int i=0; i<argument_size; ++i)
-	{
-		print(arguments[i]);
+	for (int i=0; i<argument_size; ++i){
+		println(arguments[i]);
+	}
+
+	for (int i=0; i<file_size; ++i){
+		println(files[i]);
 	}
 
 	return 0;
+}
+
+
+bool validate_file(char*  file){
+	return true;
 }
 
 int add_arguments(char* argument){
@@ -48,22 +75,22 @@ int run_command(char* command){
 	if (!commanded){
 		if (strcmp(command,"add") == 0) {
 			commanded = true;
-			print("[INFO] adding files to gnit");
+			println("[INFO] adding files to gnit");
 		}
 		else if (strcmp(command,"register") == 0){
 			commanded = true;
-			print("[INFO] registaring origin to server!");
+			println("[INFO] registaring origin to server!");
 		}
 		else if (strcmp(command,"commit") == 0){ 
-			print("[INFO] adding commits to local");
+			println("[INFO] adding commits to local");
 			commanded = true;
 		}
 		else if (strcmp(command,"login") == 0){
-			print("[INFO] login using user creds");
+			println("[INFO] login using user creds");
 			commanded = true;
 		}
 		else {
-			print("[ERROR] invalid command! ");
+			println("[ERROR] invalid command! ");
 			return 1;
 		}
 	}
@@ -71,10 +98,9 @@ int run_command(char* command){
 }
 
 void log_info(){
-	print("-- GNIT -- ");
-	print("It is a version conrolling system made in pure c ");
-	print("   this is doc on how to use this software ");
-	print("DOC DOC");
+	println("-- GNIT -- ");
+	println("It is a version conrolling system made in pure c ");
+	println("   this is doc on how to use this software ");
 }
 
 
