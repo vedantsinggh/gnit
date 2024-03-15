@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 					++file_size;
 				}
 				else {
-					Log(WARN ,"Invalid input file");
+					Log(WARN ,"INVALID INPUT FILE");
 					return 1;
 				}
 			}
@@ -76,31 +76,31 @@ int run_command(char* command){
 	assert((void("Invalid Usage!"), !commanded));
 	if (strcmp(command,"add") == 0) {
 		commanded = true;
-		Log(INFO, "adding files to gnit");
+		Log(INFO, "ADDING FILES TO GNIT");
 	}
 	else if (strcmp(command,"register") == 0){
 		commanded = true;
-		Log(INFO, "registaring origin to server!");
+		Log(INFO, "REGISTARING ORIGIN TO SERVER!");
 	}
 	else if (strcmp(command,"commit") == 0){ 
-		Log(INFO, "adding commits to local");
+		Log(INFO, "ADDING COMMITS TO LOCAL");
 		commanded = true;
 	}
 	else if (strcmp(command,"login") == 0){
-		Log(INFO, "login using user creds");
+		Log(INFO, "LOGIN USING USER CREDS");
 		commanded = true;
 	}
 	else {
-		Log(ERROR ,"invalid command! ");
+		Log(ERROR ,"INVALID COMMAND!");
 		return 1;
 	}
 	return 0;
 }
 
 void log_info(){
-	Log("-- GNIT -- ");
-	Log("It is a version conrolling system made in pure c ");
-	Log("   this is doc on how to use this software ");
+	ColorLog(CYAN, "                     -- GNIT --                   ");
+	ColorLog(CYAN, "IT IS A VERSION CONROLLING SYSTEM MADE IN PURE C++");
+	ColorLog(CYAN, "     THIS IS DOC ON HOW TO USE THIS SOFTWARE     ");
 }
 
 
