@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cassert>
 #define LOG_IMPLEMENTATION
-#include "Log.h"
+#include "libs/Log.h"
 
 #define NUMBER_OF_ARGUMENTS 2
 
