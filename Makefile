@@ -1,11 +1,12 @@
 TARGET_DIR := ~/bin
+SOURCE_FILES := main.cpp ./libs/sha256.cpp
 
 .SILENT:
-compile: main.cpp
-	g++ -o gnit main.cpp 
+compile: $(SOURCE_FILES)
+	g++ -o gnit $(SOURCE_FILES)
 
-source: main.cpp
-	g++ -o gnit main.cpp
+source: $(SOURCE_FILES)
+	g++ -o gnit $(SOURCE_FILES)
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		mkdir $(TARGET_DIR); \
 		echo '[INFO] creating $(TARGET_DIR)'; \
