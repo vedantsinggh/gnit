@@ -1,22 +1,4 @@
-#include <sys/stat.h>
-#include <fstream>
-#include <iostream>
-
-#define LOG_IMPLEMENTATION
-#include "./Log.h"
-
-#include "./sha256.h"
-
-#ifndef CONFRON_H
-#define CONFRON_H
-
-int fileExists(const char* path);
-std::string readFile(std::string path);
-std::string getFileHash(const char* name);
-
-#endif //CONFRON_H
-
-#ifdef CONFRON_IMPLEMENTATION
+#include "files.h"
 
 int fileExists(const char* path){
 	struct stat buf;
@@ -42,5 +24,3 @@ std::string getFileHash(const char* name){
 	std::string out = sha256(readFile(name));
 	return out;
 }
-
-#endif //CONFRON_IMPLEMENTATION

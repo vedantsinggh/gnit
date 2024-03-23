@@ -1,16 +1,18 @@
 TARGET_DIR := ~/bin
-SOURCE_FILES := main.cpp ./libs/sha256.cpp
+INCLUDE := include/
+SRC := src/sha256.cpp src/cmd.cpp src/files.cpp src/log.cpp
 
 .SILENT:
-compile: $(SOURCE_FILES)
-	g++ -o gnit $(SOURCE_FILES)
+compile: main.cpp $(SRC)
+	g++ -I$(INCLUDE) $(SRC) main.cpp -o gnit
 
-source: $(SOURCE_FILES)
-	g++ -o gnit $(SOURCE_FILES)
+source: $(SRC)
+	g++ -I$(INCLUDE) $(SRC) main.cpp -o gnit
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		mkdir $(TARGET_DIR); \
 		echo '[INFO] creating $(TARGET_DIR)'; \
 		echo export PATH='/home/$$USER/bin:$$PATH' >> ~/.bashrc; \
+		source ~/.bashrc; \
 	else \
 		echo "[INFO] $(TARGET_DIR) folder already exists."; \
 	fi
