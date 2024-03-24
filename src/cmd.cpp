@@ -3,15 +3,6 @@
 #include <functional>
 #include <iostream>
 #include "cmd.h"
-/*
-{
-
-	add_argument(&Cmd, "command", callback_function(){}); add_argument(&Cmd, "command", callback_function(){});	
-	add_flag(&Cmd, "flag", "short", callback_function(){});
-	execute(&Cmd, arguments);
-
-}
-*/
 
 int count = 0;
 
@@ -41,14 +32,3 @@ int execute(Cmd* cmd, int argc ,char* args[]){
 	assert("CAN'T YOU TYPE SOME VALID COMMAND, PIECE OF SHIT!");
 	return 0;
 }
-/*
-int main(int argc, char* argv[])
-{
-	Cmd cmd;
-	add_argument(&cmd,"add" , [&](int argc, char* argv[]) -> int{
-		std::cout << "You said Add, right??\n";
-		return 0;
-	});
-	execute(&cmd, argc, argv);
-}
-*/

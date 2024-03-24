@@ -5,7 +5,7 @@
 
 #ifndef CMD_H
 #define CMD_H
-#define NUMBER_OF_ARGUMENTS 1
+#define NUMBER_OF_ARGUMENTS 2
 
 struct argument{
 	std::string prompt;
