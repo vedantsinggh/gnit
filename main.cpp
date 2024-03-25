@@ -14,7 +14,7 @@ std::vector<std::string> all_files;
 std::vector<std::string> new_files;
 std::vector<std::string> updated_files;
 std::string config = "";
-const char*  config_file_path = ".gnitconfig";
+const char*  config_file_path = "./.gnitconfig";
 
 void add_scan(std::string name, std::ofstream* config_file){
 	for (const auto & entry : std::filesystem::directory_iterator(name)){
