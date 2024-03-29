@@ -105,6 +105,9 @@ void status_scan(std::string name){
 int main(int argc, char* argv[])
 {
 	Cmd cmd;
+	cmd.docs = [](){
+		Log("THIS IS DOCS!");
+	};
 
 	add_argument(&cmd, "init", [&](int arc, char* arv[]) -> int{
 		if(fileExists(config_file_path) != 0) {

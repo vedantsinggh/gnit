@@ -2,6 +2,8 @@
 #include <cassert>
 #include <functional>
 #include <iostream>
+
+#include "log.h"
 #include "cmd.h"
 
 int count = 0;
@@ -15,10 +17,16 @@ int add_argument(Cmd* cmd, std::string arg, std::function<int(int, char**)> call
 }
 
 int execute(Cmd* cmd, int argc ,char* args[]){
+
+	if (cmd->docs == nullptr){
+		Log(ERROR,"DOCS WEREN'T PROVIDED");
+		return -1;
+	}
+	
 	char* fileName = args[0];
 	
 	if (argc == 1)	{
-		//cmd.docs();
+		cmd->docs();
 		return 0;
 	}
 
@@ -29,6 +37,6 @@ int execute(Cmd* cmd, int argc ,char* args[]){
 			return 0;
 		}
 	}
-	assert("CAN'T YOU TYPE SOME VALID COMMAND, PIECE OF SHIT!");
-	return 0;
+	Log(WARN,"CAN'T YOU TYPE SOME VALID COMMAND, PIECE OF SHIT!");
+	return -1;
 }
