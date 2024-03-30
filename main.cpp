@@ -225,7 +225,12 @@ int main(int argc, char* argv[])
 			std::ofstream config_file;
 			config_file.open(config_file_path, std::ios::app);
 			for (std::string item : items){
-				if(item.rfind("./", 0 ) != 0){
+				Log(item);
+				if(item == "."){
+					item = "./";
+				}else if (item.rfind("/", 0) == 0){
+					item = "." + item;
+				}else if(item.rfind("./", 0 ) != 0){
 					item = "./" + item;
 				}
 				add_scan(item);
