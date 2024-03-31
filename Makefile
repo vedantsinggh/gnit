@@ -3,7 +3,7 @@ INCLUDE := include/
 SRC := src/sha256.cpp src/cmd.cpp src/files.cpp src/log.cpp
 
 .SILENT:
-compile: main.cpp $(SRC)
+compile: main.cpp $(SRC) $(INCLUDE)
 	g++ -I$(INCLUDE) $(SRC) main.cpp -o gnit
 
 source: $(SRC)
@@ -19,6 +19,8 @@ source: $(SRC)
 	cp gnit $(TARGET_DIR)
 	echo "[INFO] added GNIT to .bashrc"
 
+remove: .gnitconfig
+	rm .gnitconfig
 
 clean:
 	rm -r ~/bin
