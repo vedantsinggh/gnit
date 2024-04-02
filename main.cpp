@@ -16,9 +16,11 @@ std::vector<std::string> old_file;
 std::vector<std::string> new_file;
 std::vector<std::string> updated_file;
 std::vector<std::string> deleted_files;
+std::vector<std::string> removed_files;
 
 std::string config = "";
 const char* config_file_path = "./.gnitconfig";
+
 
 void add_scan(std::string name){
 
@@ -50,14 +52,14 @@ void add_scan(std::string name){
 		if(isFileFound){
 
 			std::string res = name + ": " + final_hash + "\n";
-			config += res;				
+			config += res; // add line to config
 
 		}else{
 
 			std::string hash = getFileHash(name.c_str());
 			std::string res = name + ": " + hash + "\n";
 			new_file.push_back(name);
-			config += res;				
+			config += res;	//add line to config
 
 		}
 		
@@ -181,6 +183,22 @@ int main(int argc, char* argv[])
 
 	
 	add_argument(&cmd,"status" , [&](int arc, char* arv[]) -> int{
+		
+		std::string line;
+		std::ifstream config_file(config_file_path);
+
+		while(getline(config_file, line))
+		{
+			int pos = line.find(":");
+			
+			std::string name  = line.substr(0 , pos);
+			if(fileExists(name.c_str()) != 0){
+				removed_files.push_back(name);
+			}
+		}
+		
+		config_file.close();
+
 		status_scan("./");		
 
 		if (new_file.size() == 0){
@@ -201,9 +219,17 @@ int main(int argc, char* argv[])
 			}
 		}
 
+		
+		if (removed_files.size() == 0){
+			Log(INFO, "NO DELETED FILE!");
+		}else{
+			Log(GREEN, "DELETED FILES:");
+			for(std::string f : removed_files){
+				Log(RED," + " + f);
+			}
+		}
+
 		return 0;
-
-
 	});
 
 	add_argument(&cmd,"add" , [&](int arc, char* arv[]) -> int{
