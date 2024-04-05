@@ -1,8 +1,15 @@
-# GNIT - a version control system for personal projects
+# GNIT - a small and simple version control system for personal projects
 
-## References 
-- [Version Control System](https://en.wikipedia.org/wiki/Version_control)
-- [Sample command line model](https://pbs.twimg.com/media/EKw-jzoUYAA-9WS.jpg)
+## How to use 
+-  `make build` to build the executable 
+-  copy `gnit` executable to desired project
+- run `./gnit` to read the docs
+
+## How to contribute/collab
+connect me on socials @vedantsinggh on every platform <br>
+or <br>
+start by resolving already invoked issues
+
 
 ## Stack to be used 
 - Flask (Python) for backend of web
