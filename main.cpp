@@ -1,14 +1,15 @@
 #include <iostream>
-#include <cstring>
 #include <fstream>
 #include <filesystem>
 #include <vector>
-#include <string_view>
 
 #include "cmd.h"
 #include "log.h"
 #include "files.h"
 
+/*
+global variables to store all kind of files 
+*/
 std::vector<std::string> all_dirs;
 std::vector<std::string> all_files;
 
@@ -18,11 +19,12 @@ std::vector<std::string> updated_files;
 std::vector<std::string> deleted_files;
 std::vector<std::string> removed_files;
 
-std::string config = "";
-const char* config_file_path = "./.gnitconfig";
+std::string config = ""; //global config string variable to store all configs
+const char* config_file_path = "./.gnitconfig"; //location and name of configration file
+const char* store_file_path = "./.gnitstore"; //location and name of storage file
 
 
-void add_scan(std::string name){
+void add(std::string name){
 
 	if(!std::filesystem::is_directory(name)){
 		all_files.push_back(name);	
@@ -70,7 +72,7 @@ void add_scan(std::string name){
 			if (entry.path().string() == config_file_path) continue;
 			if(std::filesystem::is_directory(entry.path())){
 				all_dirs.push_back(entry.path().string());	
-				add_scan(entry.path().string());
+				add(entry.path().string());
 			}else{
 				all_files.push_back(entry.path().string());	
 				std::string final_hash;
@@ -278,10 +280,15 @@ int main(int argc, char* argv[])
 		}
 
 		if(fileExists(config_file_path) == 0) {
+		
 			std::ofstream config_file;
 			config_file.open(config_file_path, std::ios::app);
+			
 			for (std::string item : items){
-				Log(item);
+
+				/*
+				checks for improper files paths and refactors them into same format for ease
+				*/
 				if(item == "."){
 					item = "./";
 				}else if (item.rfind("/", 0) == 0){
@@ -289,15 +296,48 @@ int main(int argc, char* argv[])
 				}else if(item.rfind("./", 0 ) != 0){
 					item = "./" + item;
 				}
-				add_scan(item);
+
+				add(item);
 			}
+		
 			config_file << config;
 			config_file.close();
+		
 		}else {
-			Log("NO GNIT CONFIG!");
+			Log(ERROR,"NO GNIT CONFIG!");
 		}
 		
 		return 0;
+
+	});
+
+
+	add_argument(&cmd, "commit", [&](int arc, char* arv[]) -> int{
+
+		if(arc != 3){
+			Log(ERROR, "INVALID NUMBER OF COMMANDS!");
+			return -1;
+		}
+		
+		std::string msg = arv[2];		
+		
+		if(fileExists(config_file_path) != 0){
+			Log(INFO,"GIT ADD FIRST BC!");
+		}
+
+		if(fileExists(store_file_path) != 0) {
+			std::ofstream file;
+			file.open(store_file_path);
+			file << sha256(config_file_path);
+			file << "\n";
+			file << msg;
+			file.close();
+			Log(INFO, "COMMITED FILES TO LOCAL");
+			return 0;
+		}else{
+			Log(ERROR, "ALREADY HAS UNPUSH COMMIT");
+			return -1;
+		}
 
 	});
 

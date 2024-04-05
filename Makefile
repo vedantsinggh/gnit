@@ -21,6 +21,7 @@ install: $(SRC)
 
 reset: .gnitconfig
 	rm .gnitconfig
+	rm .gnitstore
 
 clean:
 	rm -r ~/bin
