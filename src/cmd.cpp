@@ -23,8 +23,6 @@ int execute(Cmd* cmd, int argc ,char* args[]){
 		return -1;
 	}
 	
-	char* fileName = args[0];
-	
 	if (argc == 1)	{
 		cmd->docs();
 		return 0;

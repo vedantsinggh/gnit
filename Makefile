@@ -1,12 +1,12 @@
 TARGET_DIR := ~/bin
 INCLUDE := include/
 SRC := src/sha256.cpp src/cmd.cpp src/files.cpp src/log.cpp
-
+ARGS := -Wall 
 .SILENT:
-compile: main.cpp $(SRC) $(INCLUDE)
-	g++ -I$(INCLUDE) $(SRC) main.cpp -o gnit
+build: main.cpp $(SRC) $(INCLUDE)
+	g++ -I$(INCLUDE) $(SRC) $(ARGS) main.cpp -o gnit
 
-source: $(SRC)
+install: $(SRC)
 	g++ -I$(INCLUDE) $(SRC) main.cpp -o gnit
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		mkdir $(TARGET_DIR); \
@@ -19,7 +19,7 @@ source: $(SRC)
 	cp gnit $(TARGET_DIR)
 	echo "[INFO] added GNIT to .bashrc"
 
-remove: .gnitconfig
+reset: .gnitconfig
 	rm .gnitconfig
 
 clean:
