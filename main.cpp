@@ -123,8 +123,10 @@ void scan_files(std::string name){
 		for (const auto & entry : std::filesystem::directory_iterator(name)){
 
 			if (entry.path().string() == "./.git") continue;
+			if (entry.path().string() == " ") continue;
+			if (entry.path().string() == "\n") continue;
 			if (entry.path().string() == config_file_path) continue;
-
+			
 			if(std::filesystem::is_directory(entry.path())){
 				all_dirs.push_back(entry.path().string());
 				scan_files(entry.path().string());
@@ -146,6 +148,9 @@ void scan_status(){
 
 		while(getline(config_file, line))
 		{
+			
+			if (line.size() < 10) continue;
+
 			int pos = line.find(":");
 			std::string name  = line.substr(0 , pos);
 			
@@ -236,6 +241,7 @@ int main(int argc, char* argv[])
 		}
 		
 		if (updated_files.size() == 0){
+
 			Log(INFO, "NO FILE MODIFIED!");
 		}else{
 			Log(VOILET, "MODIFIED FILES:");
