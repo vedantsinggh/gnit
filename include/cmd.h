@@ -5,7 +5,10 @@
 
 #ifndef CMD_H
 #define CMD_H
-#define NUMBER_OF_ARGUMENTS 4
+
+#ifndef NUMBER_OF_ARGUMENTS 
+#define NUMBER_OF_ARGUMENTS 69 //this was nessessasu to be declared in this header file to compile its source code
+#endif
 
 struct argument{
 	std::string prompt;
