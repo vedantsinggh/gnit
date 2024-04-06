@@ -28,90 +28,43 @@ void add(std::string name){
 
 	if(!std::filesystem::is_directory(name)){
 		all_files.push_back(name);	
-		std::string final_hash;
 		std::string line;
 		std::ifstream config_file(config_file_path);
 		bool isFileFound = false;
 		while(getline(config_file, line))
 		{
 			if(line.rfind(name, 0 ) == 0){
-				std::string old_hash = line.substr( line.size() - 64, line.size());
-				std::string new_hash = getFileHash(name.c_str());
-				if(old_hash != new_hash){
-					final_hash = new_hash;
-					updated_files.push_back(name);
-				}else {
-					old_files.push_back(name);
-					final_hash = old_hash;
-				}
+				std::string hash = getFileHash(name.c_str());
 				isFileFound = true;
+				old_files.push_back(name);
+				std::string res = name + ": " + hash + "\n";
+				config += res;
 				break;
 			}
 		}
 		
 		config_file.close();
 
-		if(isFileFound){
-
-			std::string res = name + ": " + final_hash + "\n";
-			config += res; // add line to config
-
-		}else{
-
+		if(!isFileFound){
 			std::string hash = getFileHash(name.c_str());
 			std::string res = name + ": " + hash + "\n";
 			new_files.push_back(name);
-			config += res;	//add line to config
-
+			config += res;
 		}
 		
 	}
 	else{
 		for (const auto & entry : std::filesystem::directory_iterator(name)){
+
 			if (entry.path().string() == "./.git") continue;
 			if (entry.path().string() == config_file_path) continue;
+			if (entry.path().string() == store_file_path) continue;
+
 			if(std::filesystem::is_directory(entry.path())){
 				all_dirs.push_back(entry.path().string());	
-				add(entry.path().string());
-			}else{
-				all_files.push_back(entry.path().string());	
-				std::string final_hash;
-				std::string line;
-				std::ifstream config_file(config_file_path);
-				bool isFileFound = false;
-				while(getline(config_file, line))
-				{
-					if(line.rfind(entry.path().string(), 0 ) == 0){
-						std::string old_hash = line.substr( line.size() - 64, line.size());
-						std::string new_hash = getFileHash(entry.path().string().c_str());
-						if(old_hash != new_hash){
-							final_hash = new_hash;
-							updated_files.push_back(entry.path().string());
-						}else {
-							old_files.push_back(entry.path().string());
-							final_hash = old_hash;
-						}
-						isFileFound = true;
-						break;
-					}
-				}
-				
-				config_file.close();
-
-				if(isFileFound){
-
-					std::string res = entry.path().string() + ": " + final_hash + "\n";
-					config += res;				
-
-				}else{
-
-					std::string hash = getFileHash(entry.path().string().c_str());
-					std::string res = entry.path().string() + ": " + hash + "\n";
-					new_files.push_back(entry.path().string());
-					config += res;				
-
-				}
 			}
+
+			add(entry.path().string());
 		}
 	}
 }
@@ -257,7 +210,7 @@ int main(int argc, char* argv[])
 		}else{
 			Log(GREEN, "DELETED FILES:");
 			for(std::string f : removed_files){
-				Log(RED," + " + f);
+				Log(RED," - " + f);
 			}
 		}
 
@@ -282,7 +235,7 @@ int main(int argc, char* argv[])
 		if(fileExists(config_file_path) == 0) {
 		
 			std::ofstream config_file;
-			config_file.open(config_file_path, std::ios::app);
+			config_file.open(config_file_path, std::ios::out);
 			
 			for (std::string item : items){
 
