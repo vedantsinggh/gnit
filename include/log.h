@@ -4,8 +4,11 @@
 #define LOG_H
 
 void Log(std::string  message);
+void Log(float message);
 void Log(int level, std::string  message);
+void Log(int level, float message);
 void ColorLog(int color, std::string message);
+void ColorLog(int color, float message);
 
 enum LOG_LEVEL{
 	SUCCESS, 
