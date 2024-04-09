@@ -3,6 +3,7 @@ INCLUDE := include/
 SRC := src/sha256.cpp src/cmd.cpp src/files.cpp src/log.cpp
 ARGS := -Wall 
 .SILENT:
+
 build: main.cpp $(SRC) $(INCLUDE)
 	g++ -I$(INCLUDE) $(SRC) $(ARGS) main.cpp -o gnit
 
