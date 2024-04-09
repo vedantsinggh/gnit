@@ -20,4 +20,5 @@ We are openly looking for collaborators.
 - Pure C++ for version contolling 
 - Relational DB - either my SQL or postgreSQL
 - deply on linux server and implement load balancing and shits
+- or we could possiblily use node for such shits
 
