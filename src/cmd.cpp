@@ -17,8 +17,7 @@ int add_argument(Cmd* cmd, std::string arg, std::function<int(int, char**)> call
 }
 
 int execute(Cmd* cmd, int argc ,char* args[]){
-
-	if (cmd->docs == nullptr){
+	if (!cmd->docs){
 		Log(ERROR,"DOCS WEREN'T PROVIDED");
 		return -1;
 	}
