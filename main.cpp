@@ -295,6 +295,33 @@ int main(int argc, char* argv[])
 
 	});
 
+	add_argument(&cmd, "push", [&](int arc, char* arv[]) -> int{
+
+		if(fileExists(store_file_path) != 0){
+			Log(INFO,"GIT COMMIT FIRST!");
+
+		}
+
+		std::string line;
+		std::ifstream config_file(config_file_path);
+		int count = 0;
+
+		while(getline(config_file, line))
+		{
+			int pos = line.find(":");
+			std::string name  = line.substr(0 , pos);
+			count++;
+			//implement push file
+		}
+		
+		std::string out = "Pushed!";
+		Log(INFO, out);
+		
+		config_file.close();
+		return 0;
+
+	});
+
 	execute(&cmd, argc, argv);
 }
 /*
