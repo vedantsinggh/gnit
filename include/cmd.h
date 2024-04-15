@@ -7,7 +7,7 @@
 #define CMD_H
 
 #ifndef NUMBER_OF_ARGUMENTS 
-#define NUMBER_OF_ARGUMENTS 69 //this was nessessasu to be declared in this header file to compile its source code
+#define NUMBER_OF_ARGUMENTS 5
 #endif
 
 struct argument{

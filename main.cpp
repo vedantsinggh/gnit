@@ -3,7 +3,6 @@
 #include <filesystem>
 #include <vector>
 
-#define NUMBER_OF_ARGUMENTS 4
 #include "cmd.h"
 #include "log.h"
 #include "files.h"
