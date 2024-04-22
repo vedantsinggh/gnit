@@ -17,6 +17,7 @@ void Log(int level,float message){
 	if (level == ERROR)
 	{
 		std::cout<< "\033[31m" <<"[ERROR]   " << "\033[m";
+		exit(-1);
 	}
 	std::cout<<message<<std::endl;
 }
